@@ -1,4 +1,4 @@
-modules.exports = (api, options, rootOptions) => {
+module.exports = (api, options, rootOptions) => {
   // return {}
   api.extendPackage({
     "scripts": {
