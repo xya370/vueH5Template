@@ -1,10 +1,30 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <div>
+    <router-view :class="{ pageView: !hideNabbar }" />
+    <van-tabbar v-model="active" v-if="!hideNabbar">
+      <van-tabbar-item icon="home-o" to="/">Home</van-tabbar-item>
+      <van-tabbar-item icon="friends-o">标签</van-tabbar-item>
+      <van-tabbar-item icon="setting-o" to="/myView">My</van-tabbar-item>
+    </van-tabbar>
+  </div>
 </template>
+
+<script>
+export default {
+  name: "App",
+  data() {
+    return {
+      active: 1,
+    };
+  },
+  computed: {
+    hideNabbar() {
+      const { meta } = this.$route;
+      return meta?.hideNabbar || false;
+    },
+  },
+};
+</script>
 
 <style lang="less">
 #app {

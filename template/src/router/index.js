@@ -1,5 +1,12 @@
-import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+/*
+ * @Description:
+ * @Author: XYA
+ * @Date: 2023-07-14 15:44:38
+ * @LastEditTime: 2023-07-17 17:05:08
+ * @LastEditors: XYA
+ */
+import { createRouter, createWebHashHistory } from "vue-router";
+import HomeView from "../views/home";
 
 const routes = [
   {
@@ -8,18 +15,29 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/about",
-    name: "about",
+    path: "/myView",
+    name: "myView",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ "../views/my"),
+  },
+  {
+    path: "/imgInfo",
+    name: "imgInfo",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+      import(/* webpackChunkName: "about" */ "@views/home/imgInfo"),
+    meta: {
+      hideNabbar: true,
+    },
   },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes,
 });
 
