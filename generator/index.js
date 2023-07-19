@@ -2,15 +2,15 @@
  * @Description:
  * @Author: XYA
  * @Date: 2023-07-14 15:27:25
- * @LastEditTime: 2023-07-17 17:26:51
+ * @LastEditTime: 2023-07-19 10:41:49
  * @LastEditors: XYA
  */
 module.exports = (api, options, rootOptions) => {
   // return {}
   api.extendPackage({
-    name: 'vue_model',
-    version: '0.1.0',
-    private: true,
+    // name: 'vue_model',
+    // version: '0.1.0',
+    // private: true,
     scripts: {
       serve: 'vue-cli-service serve',
       build: 'vue-cli-service build',
@@ -51,5 +51,13 @@ module.exports = (api, options, rootOptions) => {
       'pre-commit': 'lint-staged'
     }
   })
-  api.render('../template')
+  api.render(files => {
+    Object.keys(files)
+      .filter(path => path.startsWith('src/') || path.startsWith('public/'))
+      .forEach(path => delete files[path])
+  })
+  api.render('../template');
+  api.onCreateComplete(() => {
+    process.env.VUE_CLI_SKIP_WRITE = true;
+  });
 }
